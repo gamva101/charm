@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:instagram_flutter/data/charm_data_provider.dart';
+import 'package:instagram_flutter/data/charm_model.dart';
+import 'package:instagram_flutter/data/repository.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +14,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Test app demo', theme: ThemeData.dark(), home: HomeWidget());
+        debugShowCheckedModeBanner: false,
+        title: 'Test app demo',
+        theme: ThemeData.dark(),
+        home: HomeWidget());
   }
 }
 
@@ -24,127 +29,82 @@ class HomeWidget extends StatefulWidget {
 }
 
 class HomeWidgetState extends State<HomeWidget> {
+  static final CharmDataProvider _charmDataProvider = CharmDataProvider();
+  final CharmRepository _charmRepository = CharmRepository(_charmDataProvider);
+
   @override
   Widget build(BuildContext context) {
+    CharmRepository _charmRepository = CharmRepository(_charmDataProvider);
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: Text('AppBar'),
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {
-                showSearch(context: context, delegate: Search(widget.list));
-              },
-              icon: const Icon(Icons.search),
-            )
-          ],
         ),
-        body: ListView.builder(
-          itemCount: widget.list.length,
-          itemBuilder: (context, index) => ListTile(
-              title: Text(widget.list[index]),
+        body: FutureBuilder(
+            future: _fetch(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return _createCharmList(snapshot.data);
+              } else {
+                return Container();
+              }
+            }));
+  }
+
+  Widget _createCharmList(List<CharmModel> charmList) {
+    return ListView.separated(
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+              title: Text(charmList[index].getName()),
+              leading: Image.asset(charmList[index].getImagePath()),
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => SecondRoute(
-                            name: widget.list[index],
-                          )))),
-        ));
+                      builder: (context) =>
+                          SecondRoute(charmModel: charmList[index]))));
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return Divider(
+            thickness: 8.0,
+            height: 8.0,
+            color: Colors.transparent,
+          );
+        },
+        itemCount: charmList.length);
+  }
+
+  Future<List<CharmModel>> _fetch() async {
+    return await _charmRepository.getCharmList();
   }
 }
 
 class SecondRoute extends StatelessWidget {
-  final String name;
-  SecondRoute({required this.name});
+  final CharmModel charmModel;
+  SecondRoute({required this.charmModel});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Second route $name'),
+          title: Text('Second route ' + charmModel.getName()),
         ),
-        body: Center(
-            child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Go back'))));
-  }
-}
-
-class Search extends SearchDelegate {
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return <Widget>[
-      IconButton(
-        icon: Icon(Icons.close),
-        onPressed: () {
-          query = "";
-        },
-      ),
-    ];
-  }
-
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        icon: Icon(Icons.arrow_back));
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    String searchedResult = '';
-    return Container(
-      child: Center(child: Text(searchedResult)),
-    );
-  }
-
-  final List<String> listExample;
-  Search(this.listExample);
-  List<String> recentList = ["Text 4", "Text 5"];
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<String> suggestionList = [];
-    query.isEmpty
-        ? suggestionList = recentList
-        : suggestionList
-            .addAll(listExample.where((element) => element.contains(query)));
-
-    return ListView.builder(
-        itemCount: suggestionList.length,
-        itemBuilder: (context, index) {
-          return ListTile(title: Text(suggestionList[index]));
-        });
-  }
-}
-
-class GridViewWidget extends StatefulWidget {
-  const GridViewWidget({Key? key}) : super(key: key);
-
-  @override
-  GridViewWidgetState createState() => GridViewWidgetState();
-}
-
-class GridViewWidgetState extends State<GridViewWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      itemCount: 10,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: 3 / 4,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10),
-      itemBuilder: (context, index) {
-        return Container(
-          color: Colors.lightGreen,
-          child: Text(' Item : $index'),
-        );
-      },
-    );
+        body: Card(
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            children: [
+              ListTile(
+                  title: Text(charmModel.getName()),
+                  subtitle: Text('charm description', style: TextStyle())),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'Greyhound divisively hello coldly wonderfully marginally far upon excluding.',
+                  style: TextStyle(),
+                ),
+              ),
+              Image.asset(charmModel.getImagePath())
+            ],
+          ),
+        ));
   }
 }

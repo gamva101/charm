@@ -1,0 +1,42 @@
+[
+    {
+        "name": "dummy1", 
+        "imagePath": "/images/dummy1.png"
+    },
+    {
+        "name": "dummy2", 
+        "imagePath": "/images/dummy2.png"
+    },
+    {
+        "name": "dummy3", 
+        "imagePath": "/images/dummy3.png"
+    },
+    {
+        "name": "dummy4", 
+        "imagePath": "/images/dummy4.png"
+    },
+    {
+        "name": "dummy5", 
+        "imagePath": "/images/dummy5.png"
+    },
+    {
+        "name": "dummy6", 
+        "imagePath": "/images/dummy6.png"
+    },
+    {
+        "name": "dummy7", 
+        "imagePath": "/images/dummy7.png"
+    },
+    {
+        "name": "dummy8", 
+        "imagePath": "/images/dummy8.png"
+    },
+    {
+        "name": "dummy9", 
+        "imagePath": "/images/dummy9.png"
+    },
+    {
+        "name": "dummy10", 
+        "imagePath": "/images/dummy10.png"
+    }
+]
