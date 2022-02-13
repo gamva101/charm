@@ -1,42 +1,52 @@
 [
     {
         "name": "dummy1", 
-        "imagePath": "/images/dummy1.png"
+        "imagePath": "/images/dummy1.png",
+        "isFavorite": false
     },
     {
         "name": "dummy2", 
-        "imagePath": "/images/dummy2.png"
+        "imagePath": "/images/dummy2.png",
+        "isFavorite": false
     },
     {
         "name": "dummy3", 
-        "imagePath": "/images/dummy3.png"
+        "imagePath": "/images/dummy3.png",
+        "isFavorite": false
     },
     {
         "name": "dummy4", 
-        "imagePath": "/images/dummy4.png"
+        "imagePath": "/images/dummy4.png",
+        "isFavorite": false
     },
     {
         "name": "dummy5", 
-        "imagePath": "/images/dummy5.png"
+        "imagePath": "/images/dummy5.png",
+        "isFavorite": false
     },
     {
         "name": "dummy6", 
-        "imagePath": "/images/dummy6.png"
+        "imagePath": "/images/dummy6.png",
+        "isFavorite": false
     },
     {
         "name": "dummy7", 
-        "imagePath": "/images/dummy7.png"
+        "imagePath": "/images/dummy7.png",
+        "isFavorite": false
     },
     {
         "name": "dummy8", 
-        "imagePath": "/images/dummy8.png"
+        "imagePath": "/images/dummy8.png",
+        "isFavorite": false
     },
     {
         "name": "dummy9", 
-        "imagePath": "/images/dummy9.png"
+        "imagePath": "/images/dummy9.png",
+        "isFavorite": false
     },
     {
         "name": "dummy10", 
-        "imagePath": "/images/dummy10.png"
+        "imagePath": "/images/dummy10.png",
+        "isFavorite": false
     }
 ]

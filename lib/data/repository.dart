@@ -7,4 +7,7 @@ class CharmRepository {
   CharmRepository(this._charmDataProvider);
 
   Future<List<CharmModel>> getCharmList() => _charmDataProvider.getCharmList();
+
+  Future<int> updateCharmList(List<CharmModel> charmList) =>
+      _charmDataProvider.updateCharmList(charmList);
 }

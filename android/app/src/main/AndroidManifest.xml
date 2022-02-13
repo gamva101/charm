@@ -4,6 +4,10 @@
         android:label="instagram_flutter"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-5759134354866621~7135613780" >
+        </meta-data> -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
